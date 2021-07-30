@@ -1,0 +1,5 @@
+name: MiraiMC
+main: me.dreamvoid.link2qq.bungee.BungeePlugin
+author: DreamVoid
+description: MiraiMC QQ绑定插件
+version: ${project.version}

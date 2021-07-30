@@ -1,5 +1,6 @@
 name: Link2QQ
 main: me.dreamvoid.link2qq.bukkit.BukkitPlugin
+description: MiraiMC QQ绑定插件
 version: ${project.version}
 author: DreamVoid
 api-version: 1.13
