@@ -11,6 +11,7 @@
     <modules>
         <module>Link2QQ-Bukkit</module>
         <module>Link2QQ-Bungee</module>
+        <module>Link2QQ-Nukkit</module>
     </modules>
 
     <properties>
