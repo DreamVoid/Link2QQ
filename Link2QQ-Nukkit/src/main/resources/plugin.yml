@@ -1,0 +1,15 @@
+name: Link2QQ
+main: me.dreamvoid.link2qq.nukkit.NukkitPlugin
+description: MiraiMC QQ绑定插件
+version: ${project.version}
+author: DreamVoid
+api: ["1.0.13"]
+depend: [MiraiMC]
+commands:
+  link2qq:
+    description: Link2QQ 插件主命令
+    permission: miraimc.command.link2qq
+permissions:
+  miraimc.command.link2qq:
+    description: 允许使用 /link2qq
+    default: true

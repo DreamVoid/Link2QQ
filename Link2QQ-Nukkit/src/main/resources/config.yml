@@ -1,0 +1,18 @@
+# 机器人配置
+bot:
+  # 启用的机器人账号
+  # 只有这个账号接收到的消息才会被处理
+  bot-account: 123456
+
+  # 启用的群号
+  # 只有这个群接收到的消息才会被处理
+  group-id: 123456
+
+  # QQ上的绑定命令前缀
+  add-bind-command: "添加绑定"
+
+  # QQ上的确认绑定前缀
+  confirm-bind-command: "确认绑定"
+
+  # 绑定确认码长度
+  confirm-code-length: 6
