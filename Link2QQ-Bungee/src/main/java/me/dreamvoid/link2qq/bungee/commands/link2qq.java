@@ -1,8 +1,8 @@
 package me.dreamvoid.link2qq.bungee.commands;
 
 import me.dreamvoid.link2qq.bungee.BungeePlugin;
-import me.dreamvoid.link2qq.internal.Config;
-import me.dreamvoid.link2qq.internal.Utils;
+import me.dreamvoid.link2qq.bungee.Config;
+import me.dreamvoid.link2qq.bungee.Utils;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;

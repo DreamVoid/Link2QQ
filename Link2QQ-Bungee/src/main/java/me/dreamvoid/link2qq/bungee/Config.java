@@ -1,7 +1,5 @@
-package me.dreamvoid.link2qq.internal;
+package me.dreamvoid.link2qq.bungee;
 
-import me.dreamvoid.link2qq.bukkit.BukkitPlugin;
-import me.dreamvoid.link2qq.bungee.BungeePlugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 
@@ -11,7 +9,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 
 public class Config {
-    private BukkitPlugin plugin;
     private static BungeePlugin BungeePlugin;
     private static Configuration bungeeConfig;
 
@@ -21,23 +18,8 @@ public class Config {
     public static String Bot_ConfirmBindCommand;
     public static int Bot_ConfirmCodeLength;
 
-    public Config(BukkitPlugin plugin){
-        this.plugin = plugin;
-    }
     public Config(BungeePlugin bungee){
         BungeePlugin = bungee;
-    }
-
-    public void loadConfig(){
-        if(!new File(plugin.getDataFolder(),"config.yml").exists()){
-            plugin.saveDefaultConfig();
-        }
-
-        Bot_Id = plugin.getConfig().getLong("bot.bot-account");
-        Bot_Group = plugin.getConfig().getLong("bot.group-id");
-        Bot_AddBindCommand = plugin.getConfig().getString("bot.add-bind-command","添加绑定");
-        Bot_ConfirmBindCommand = plugin.getConfig().getString("bot.confirm-bind-command","确认绑定");
-        Bot_ConfirmCodeLength = plugin.getConfig().getInt("bot.confirm-code-length", 6);
     }
 
     public static void loadConfigBungee(){
