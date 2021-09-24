@@ -1,12 +1,10 @@
 package me.dreamvoid.link2qq.bungee;
 
 import me.dreamvoid.link2qq.bungee.commands.link2qq;
-import me.dreamvoid.link2qq.internal.Config;
-import me.dreamvoid.link2qq.internal.Utils;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
-import me.dreamvoid.miraimc.bukkit.event.MiraiFriendMessageEvent;
-import me.dreamvoid.miraimc.bukkit.event.MiraiGroupMessageEvent;
+import me.dreamvoid.miraimc.bungee.event.MiraiFriendMessageEvent;
+import me.dreamvoid.miraimc.bungee.event.MiraiGroupMessageEvent;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -102,5 +100,4 @@ public class BungeePlugin extends Plugin implements Listener {
             });
         }
     }
-
 }

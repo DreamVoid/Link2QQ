@@ -1,7 +1,5 @@
 package me.dreamvoid.link2qq.bukkit;
 
-import me.dreamvoid.link2qq.internal.Config;
-import me.dreamvoid.link2qq.internal.Utils;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.MiraiFriendMessageEvent;
@@ -20,7 +18,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -121,7 +118,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener, CommandExecuto
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length > 0){
             switch (args[0].toLowerCase()){
                 case "bind": {
