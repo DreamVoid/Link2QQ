@@ -45,7 +45,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener, CommandExecuto
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    String[] args = e.getMessageToMiraiCode().split(" ");
+                    String[] args = e.getMessageContent().split(" ");
                     if(args[0].equals(Config.Bot_AddBindCommand)){
                         if(args.length >= 2){
                             Utils.qqBind.remove(e.getSenderID());
@@ -83,7 +83,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener, CommandExecuto
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    String[] args = e.getMessageToMiraiCode().split(" ");
+                    String[] args = e.getMessageContent().split(" ");
                     if(args[0].equals(Config.Bot_AddBindCommand)){
                         if(args.length >= 2){
                             Utils.qqBind.remove(e.getSenderID());
