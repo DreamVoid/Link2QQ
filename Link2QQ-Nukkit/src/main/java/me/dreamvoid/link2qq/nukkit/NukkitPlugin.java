@@ -36,7 +36,7 @@ public class NukkitPlugin extends PluginBase implements Listener {
 
     @EventHandler
     public void onFriendMessageReceive(MiraiFriendMessageEvent e) {
-        if (e.getBotID() == Config.Bot_Id) {
+        if (Config.Bot_Id.contains(e.getBotID())) {
             getServer().getScheduler().scheduleAsyncTask(this, new AsyncTask() {
                 @Override
                 public void onRun() {
@@ -75,7 +75,7 @@ public class NukkitPlugin extends PluginBase implements Listener {
 
     @EventHandler
     public void onGroupMessageReceive(MiraiGroupMessageEvent e) {
-        if (e.getBotID() == Config.Bot_Id && e.getGroupID() == Config.Bot_Group) {
+        if (Config.Bot_Id.contains(e.getBotID()) && Config.Bot_Group.contains(e.getGroupID())) {
             getServer().getScheduler().scheduleAsyncTask(this, new AsyncTask() {
                 @Override
                 public void onRun() {

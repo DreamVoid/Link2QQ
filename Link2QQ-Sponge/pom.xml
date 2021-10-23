@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>Link2QQ-Bungee</artifactId>
+    <artifactId>Link2QQ-Sponge</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -18,8 +18,9 @@
 
     <repositories>
         <repository>
-            <id>bungeecord-repo</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>sponge</id>
+            <url>https://repo.spongepowered.org/maven</url>
+            <name>sponge</name>
         </repository>
     </repositories>
 
@@ -28,19 +29,10 @@
             <groupId>io.github.dreamvoid</groupId>
             <artifactId>MiraiMC-Integration</artifactId>
         </dependency>
-        <!-- BungeeCord API -->
         <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.17-R0.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.17-R0.1-SNAPSHOT</version>
-            <type>javadoc</type>
+            <groupId>org.spongepowered</groupId>
+            <artifactId>spongeapi</artifactId>
+            <version>7.2.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

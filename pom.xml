@@ -7,11 +7,12 @@
     <groupId>io.github.dreamvoid</groupId>
     <artifactId>Link2QQ</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.3</version>
+    <version>1.1</version>
     <modules>
         <module>Link2QQ-Bukkit</module>
         <module>Link2QQ-Bungee</module>
         <module>Link2QQ-Nukkit</module>
+        <module>Link2QQ-Sponge</module>
     </modules>
 
     <properties>
