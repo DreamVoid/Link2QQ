@@ -31,7 +31,7 @@ public class BungeePlugin extends Plugin implements Listener {
 
     @EventHandler
     public void onFriendMessageReceive(MiraiFriendMessageEvent e){
-        if(e.getBotID() == Config.Bot_Id){
+        if(Config.Bot_Id.contains(e.getBotID())){
             getProxy().getScheduler().runAsync(this, () -> {
                 String[] args = e.getMessageContent().split(" ");
                 if(args[0].equals(Config.Bot_AddBindCommand)){
@@ -66,7 +66,7 @@ public class BungeePlugin extends Plugin implements Listener {
 
     @EventHandler
     public void onGroupMessageReceive(MiraiGroupMessageEvent e){
-        if(e.getBotID() == Config.Bot_Id && e.getGroupID() == Config.Bot_Group){
+        if(Config.Bot_Id.contains(e.getBotID()) && Config.Bot_Group.contains(e.getGroupID())){
             getProxy().getScheduler().runAsync(this, () -> {
                 String[] args = e.getMessageContent().split(" ");
                 if(args[0].equals(Config.Bot_AddBindCommand)){

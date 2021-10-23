@@ -7,13 +7,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.List;
 
 public class Config {
     private static BungeePlugin BungeePlugin;
     private static Configuration bungeeConfig;
 
-    public static long Bot_Id;
-    public static long Bot_Group;
+    public static List<Long> Bot_Id;
+    public static List<Long> Bot_Group;
     public static String Bot_AddBindCommand;
     public static String Bot_ConfirmBindCommand;
     public static int Bot_ConfirmCodeLength;
@@ -40,8 +41,8 @@ public class Config {
             e.printStackTrace();
         }
 
-        Bot_Id = bungeeConfig.getLong("bot.bot-account");
-        Bot_Group = bungeeConfig.getLong("bot.group-id");
+        Bot_Id = bungeeConfig.getLongList("bot.bot-account");
+        Bot_Group = bungeeConfig.getLongList("bot.group-id");
         Bot_AddBindCommand = bungeeConfig.getString("bot.add-bind-command","添加绑定");
         Bot_ConfirmBindCommand = bungeeConfig.getString("bot.confirm-bind-command","确认绑定");
         Bot_ConfirmCodeLength = bungeeConfig.getInt("bot.confirm-code-length", 6);

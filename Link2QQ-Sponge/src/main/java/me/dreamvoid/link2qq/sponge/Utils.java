@@ -1,4 +1,4 @@
-package me.dreamvoid.link2qq.nukkit;
+package me.dreamvoid.link2qq.sponge;
 
 import java.util.HashMap;
 import java.util.Random;

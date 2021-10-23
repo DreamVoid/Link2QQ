@@ -11,7 +11,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 
-public class BukkitPlugin extends JavaPlugin implements Listener, CommandExecutor {
+public class BukkitPlugin extends JavaPlugin implements Listener {
     private Config PluginConfig;
 
     @Override
@@ -33,7 +32,6 @@ public class BukkitPlugin extends JavaPlugin implements Listener, CommandExecuto
     public void onEnable() {
         PluginConfig.loadConfig();
         Bukkit.getPluginManager().registerEvents(this, this);
-        getCommand("link2qq").setExecutor(this);
     }
 
     @Override
@@ -41,7 +39,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener, CommandExecuto
 
     @EventHandler
     public void onFriendMessageReceive(MiraiFriendMessageEvent e){
-        if(e.getBotID() == Config.Bot_Id){
+        if(Config.Bot_Id.contains(e.getBotID())){
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -79,7 +77,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener, CommandExecuto
 
     @EventHandler
     public void onGroupMessageReceive(MiraiGroupMessageEvent e){
-        if(e.getBotID() == Config.Bot_Id && e.getGroupID() == Config.Bot_Group){
+        if(Config.Bot_Id.contains(e.getBotID()) && Config.Bot_Group.contains(e.getGroupID())){
             new BukkitRunnable() {
                 @Override
                 public void run() {
