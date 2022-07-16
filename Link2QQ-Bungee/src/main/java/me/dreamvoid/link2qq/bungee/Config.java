@@ -18,12 +18,14 @@ public class Config {
     public static String Bot_AddBindCommand;
     public static String Bot_ConfirmBindCommand;
     public static int Bot_ConfirmCodeLength;
+    private static Config Instance;
 
     public Config(BungeePlugin bungee){
         BungeePlugin = bungee;
+        Instance = this;
     }
 
-    public static void loadConfigBungee(){
+    public void loadConfigBungee(){
         try {
             if (!BungeePlugin.getDataFolder().exists()) {
                 if(!BungeePlugin.getDataFolder().mkdir()) throw new IOException();
@@ -46,5 +48,9 @@ public class Config {
         Bot_AddBindCommand = bungeeConfig.getString("bot.add-bind-command","添加绑定");
         Bot_ConfirmBindCommand = bungeeConfig.getString("bot.confirm-bind-command","确认绑定");
         Bot_ConfirmCodeLength = bungeeConfig.getInt("bot.confirm-code-length", 6);
+    }
+
+    public static void reloadConfigBungee(){
+        Instance.loadConfigBungee();
     }
 }

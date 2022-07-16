@@ -1,18 +1,28 @@
 package me.dreamvoid.link2qq.sponge;
 
 import com.google.inject.Inject;
-import me.dreamvoid.miraimc.api.*;
-import me.dreamvoid.miraimc.sponge.event.*;
+import me.dreamvoid.miraimc.api.MiraiBot;
+import me.dreamvoid.miraimc.api.MiraiMC;
+import me.dreamvoid.miraimc.sponge.event.message.passive.MiraiFriendMessageEvent;
+import me.dreamvoid.miraimc.sponge.event.message.passive.MiraiGroupMessageEvent;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
-import org.spongepowered.api.command.*;
-import org.spongepowered.api.command.args.*;
-import org.spongepowered.api.command.spec.*;
+import org.spongepowered.api.command.CommandException;
+import org.spongepowered.api.command.CommandResult;
+import org.spongepowered.api.command.CommandSource;
+import org.spongepowered.api.command.args.ArgumentParseException;
+import org.spongepowered.api.command.args.CommandContext;
+import org.spongepowered.api.command.args.GenericArguments;
+import org.spongepowered.api.command.spec.CommandExecutor;
+import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.game.state.*;
-import org.spongepowered.api.plugin.*;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStartingServerEvent;
+import org.spongepowered.api.plugin.Dependency;
+import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.scheduler.Task;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -22,7 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-@Plugin(id = "link2qq", name = "Link2QQ", version = "1.1", description = "Link your minecraft account to QQ.", dependencies = @Dependency(id = "miraimc"))
+@Plugin(id = "link2qq", name = "Link2QQ", version = "1.2", description = "Link your minecraft account to QQ.", dependencies = @Dependency(id = "miraimc"))
 public class SpongePlugin implements CommandExecutor {
 
     @Inject
@@ -63,7 +73,7 @@ public class SpongePlugin implements CommandExecutor {
     public void onFriendMessageReceive(MiraiFriendMessageEvent e){
         if(Config.Bot_Id.contains(e.getBotID())){
             Task.builder().async().name("Link2QQ Friend Message").execute(() -> {
-                String[] args = e.getMessageContent().split(" ");
+                String[] args = e.getMessage().split(" ");
                 if(args[0].equals(Config.Bot_AddBindCommand)){
                     if(args.length >= 2){
                         Utils.qqBind.remove(e.getSenderID());
@@ -85,7 +95,7 @@ public class SpongePlugin implements CommandExecutor {
                         String name = args[1];
                         String code = args[2];
                         if(Utils.playerBind.get(name) != null && Utils.playerCode.get(name) != null && Utils.playerBind.get(name) == (e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
-                            MiraiMC.addBinding(Sponge.getServer().getPlayer(name).get().getUniqueId().toString(), e.getSenderID());
+                            MiraiMC.addBind(Sponge.getServer().getPlayer(name).get().getUniqueId(), e.getSenderID());
                             MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("已成功添加绑定！如需更换绑定，请直接发起新的绑定；如需取消绑定，请联系管理员！");
                         } else MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("无法核对您的信息，请检查您的输入或重新发起绑定！");
                     } else MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("参数不足，请检查消息内容！");
@@ -98,7 +108,7 @@ public class SpongePlugin implements CommandExecutor {
     public void onGroupMessageReceive(MiraiGroupMessageEvent e){
         if(Config.Bot_Id.contains(e.getBotID()) && Config.Bot_Group.contains(e.getGroupID())){
             Task.builder().async().name("Link2QQ Group Message").execute(() -> {
-                String[] args = e.getMessageContent().split(" ");
+                String[] args = e.getMessage().split(" ");
                 if(args[0].equals(Config.Bot_AddBindCommand)){
                     if(args.length >= 2){
                         Utils.qqBind.remove(e.getSenderID());
@@ -120,7 +130,7 @@ public class SpongePlugin implements CommandExecutor {
                         String name = args[1];
                         String code = args[2];
                         if(Utils.playerBind.get(name) != null && Utils.playerCode.get(name) != null && Utils.playerBind.get(name) == (e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
-                            MiraiMC.addBinding(Sponge.getServer().getPlayer(name).get().getUniqueId().toString(), e.getSenderID());
+                            MiraiMC.addBind(Sponge.getServer().getPlayer(name).get().getUniqueId(), e.getSenderID());
                             MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("已成功添加绑定！如需更换绑定，请直接发起新的绑定；如需取消绑定，请联系管理员！");
                             Utils.playerBind.remove(name);
                             Utils.playerCode.remove(name);
@@ -170,7 +180,7 @@ public class SpongePlugin implements CommandExecutor {
                         long qqId = Long.parseLong(args[1]);
                         String code = args[2];
                         if(Utils.qqBind.get(qqId) != null && Utils.qqCode.get(qqId) != null && Utils.qqBind.get(qqId).equalsIgnoreCase(player.getName()) && Utils.qqCode.get(qqId).equals(code)){
-                            MiraiMC.addBinding(player.getUniqueId().toString(),qqId);
+                            MiraiMC.addBind(player.getUniqueId(),qqId);
                             for (String s : Arrays.asList("&a已成功添加绑定！", "&a如需取消绑定，请联系管理员！")) {
                                 player.sendMessage(TextSerializers.FORMATTING_CODE.deserialize(s));
                             }
