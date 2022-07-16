@@ -7,7 +7,6 @@ import me.dreamvoid.miraimc.api.MiraiMC;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -35,13 +34,13 @@ public class link2qq extends Command {
                         Utils.playerBind.put(player.getName(),qqId);
                         Utils.playerCode.put(player.getName(),Utils.getRandomString(Config.Bot_ConfirmCodeLength));
                         String verify = Config.Bot_ConfirmBindCommand + " "+ player.getName() + " "+ Utils.playerCode.get(player.getName());
-                        TextComponent message = new TextComponent(ChatColor.AQUA + verify);
+                        TextComponent message = new TextComponent(new TextComponent(ChatColor.AQUA + verify));
                         message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, verify));
-                        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder("点击置入编辑框以复制")).create()));
+                        message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText("点击置入编辑框以复制")));
 
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e请使用你的QQ私聊机器人或向机器人所在群发送以下消息："));
+                        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&e请使用你的QQ私聊机器人或向机器人所在群发送以下消息：")));
                         player.sendMessage(message);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&e以完成验证流程 &7(点击可复制)"));
+                        player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&e以完成验证流程 &7(点击可复制)")));
                     }
                     break;
                 }
@@ -51,33 +50,33 @@ public class link2qq extends Command {
                         long qqId = Long.parseLong(args[1]);
                         String code = args[2];
                         if(Utils.qqBind.get(qqId) != null && Utils.qqCode.get(qqId) != null && Utils.qqBind.get(qqId).equalsIgnoreCase(player.getName()) && Utils.qqCode.get(qqId).equals(code)){
-                            MiraiMC.addBinding(player.getUniqueId().toString(),qqId);
+                            MiraiMC.addBind(player.getUniqueId(),qqId);
                             for (String s : Arrays.asList("&a已成功添加绑定！", "&a如需取消绑定，请联系管理员！")) {
-                                player.sendMessage(ChatColor.translateAlternateColorCodes('&',s));
+                                player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',s)));
                             }
-                        } else player.sendMessage(ChatColor.translateAlternateColorCodes('&',"&c无法核对您的信息，请检查您的输入或重新发起绑定！"));
+                        } else player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&c无法核对您的信息，请检查您的输入或重新发起绑定！")));
                     }
                     break;
                 }
                 case "reload":{
                     if(sender.hasPermission("miraimc.command.link2qq.reload")){
-                        Config.loadConfigBungee();
+                        Config.reloadConfigBungee();
                         Utils.qqCode.clear();
                         Utils.qqBind.clear();
                         Utils.playerBind.clear();
                         Utils.playerCode.clear();
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&a配置文件已重新加载，并已清空待验证队列！"));
-                    } else sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&c你没有足够的权限执行此命令！"));
+                        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&a配置文件已重新加载，并已清空待验证队列！")));
+                    } else sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&c你没有足够的权限执行此命令！")));
                     break;
                 }
                 default:{
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6&lLink&b&l2&e&lQQ&r &a插件菜单"));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6/link2qq bind <QQ号>:&r 添加一个绑定"));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6/link2qq verify <QQ号> <绑定码>:&r 确认绑定"));
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&',"&6/link2qq reload:&r 重新加载配置文件"));
+                    sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&6&lLink&b&l2&e&lQQ&r &a插件菜单")));
+                    sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&6/link2qq bind <QQ号>:&r 添加一个绑定")));
+                    sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&6/link2qq verify <QQ号> <绑定码>:&r 确认绑定")));
+                    sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&6/link2qq reload:&r 重新加载配置文件")));
                     break;
                 }
             }
-        } else sender.sendMessage("This server is running "+bungee.getDescription().getName()+" version "+bungee.getDescription().getVersion()+" by "+ bungee.getDescription().getAuthor());
+        } else sender.sendMessage(TextComponent.fromLegacyText("This server is running "+bungee.getDescription().getName()+" version "+bungee.getDescription().getVersion()+" by "+ bungee.getDescription().getAuthor()));
     }
 }
