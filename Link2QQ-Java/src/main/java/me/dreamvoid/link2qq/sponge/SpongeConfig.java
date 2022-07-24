@@ -9,9 +9,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.*;
 
-public class Config {
+public class SpongeConfig {
     private final SpongePlugin plugin;
-    private static Config Instance;
+    private static SpongeConfig Instance;
 
     public static File PluginDir;
 
@@ -21,7 +21,7 @@ public class Config {
     public static String Bot_ConfirmBindCommand;
     public static int Bot_ConfirmCodeLength;
 
-    public Config(SpongePlugin plugin){
+    public SpongeConfig(SpongePlugin plugin){
         Instance = this;
         this.plugin = plugin;
         PluginDir = plugin.getDataFolder();

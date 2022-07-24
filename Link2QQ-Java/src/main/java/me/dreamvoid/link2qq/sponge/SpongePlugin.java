@@ -1,6 +1,7 @@
 package me.dreamvoid.link2qq.sponge;
 
 import com.google.inject.Inject;
+import me.dreamvoid.link2qq.Utils;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.sponge.event.message.passive.MiraiFriendMessageEvent;
@@ -51,7 +52,7 @@ public class SpongePlugin implements CommandExecutor {
     @Listener
     public void onLoad(GamePreInitializationEvent e) {
         try {
-            new Config(this).loadConfig();
+            new SpongeConfig(this).loadConfig();
         } catch (IOException ioException) {
             getLogger().warn("An error occurred while loading plugin.");
             ioException.printStackTrace();
@@ -71,15 +72,15 @@ public class SpongePlugin implements CommandExecutor {
 
     @Listener
     public void onFriendMessageReceive(MiraiFriendMessageEvent e){
-        if(Config.Bot_Id.contains(e.getBotID())){
+        if(SpongeConfig.Bot_Id.contains(e.getBotID())){
             Task.builder().async().name("Link2QQ Friend Message").execute(() -> {
                 String[] args = e.getMessage().split(" ");
-                if(args[0].equals(Config.Bot_AddBindCommand)){
+                if(args[0].equals(SpongeConfig.Bot_AddBindCommand)){
                     if(args.length >= 2){
                         Utils.qqBind.remove(e.getSenderID());
                         Utils.qqCode.remove(e.getSenderID());
                         Utils.qqBind.put(e.getSenderID(),args[1]);
-                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(Config.Bot_ConfirmCodeLength));
+                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(SpongeConfig.Bot_ConfirmCodeLength));
                         for (String s : Arrays.asList("请在游戏内输入指令以完成绑定流程：", "/link2qq verify " + e.getSenderID() + " " + Utils.qqCode.get(e.getSenderID()))) {
                             MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage(s);
                             try {
@@ -90,7 +91,7 @@ public class SpongePlugin implements CommandExecutor {
                         }
                     } else MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("参数不足，请检查消息内容！");
                 }
-                if(args[0].equals(Config.Bot_ConfirmBindCommand)){
+                if(args[0].equals(SpongeConfig.Bot_ConfirmBindCommand)){
                     if(args.length >= 3){
                         String name = args[1];
                         String code = args[2];
@@ -106,15 +107,15 @@ public class SpongePlugin implements CommandExecutor {
 
     @Listener
     public void onGroupMessageReceive(MiraiGroupMessageEvent e){
-        if(Config.Bot_Id.contains(e.getBotID()) && Config.Bot_Group.contains(e.getGroupID())){
+        if(SpongeConfig.Bot_Id.contains(e.getBotID()) && SpongeConfig.Bot_Group.contains(e.getGroupID())){
             Task.builder().async().name("Link2QQ Group Message").execute(() -> {
                 String[] args = e.getMessage().split(" ");
-                if(args[0].equals(Config.Bot_AddBindCommand)){
+                if(args[0].equals(SpongeConfig.Bot_AddBindCommand)){
                     if(args.length >= 2){
                         Utils.qqBind.remove(e.getSenderID());
                         Utils.qqCode.remove(e.getSenderID());
                         Utils.qqBind.put(e.getSenderID(),args[1]);
-                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(Config.Bot_ConfirmCodeLength));
+                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(SpongeConfig.Bot_ConfirmCodeLength));
                         for (String s : Arrays.asList("请在游戏内输入指令以完成绑定流程：", "/link2qq verify " + e.getSenderID() + " " + Utils.qqCode.get(e.getSenderID()))) {
                             MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(s);
                             try {
@@ -125,7 +126,7 @@ public class SpongePlugin implements CommandExecutor {
                         }
                     } else MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("参数不足，请检查消息内容！");
                 }
-                if(args[0].equals(Config.Bot_ConfirmBindCommand)){
+                if(args[0].equals(SpongeConfig.Bot_ConfirmBindCommand)){
                     if(args.length >= 3){
                         String name = args[1];
                         String code = args[2];
@@ -166,8 +167,8 @@ public class SpongePlugin implements CommandExecutor {
                         Utils.playerBind.remove(player.getName());
                         Utils.playerCode.remove(player.getName());
                         Utils.playerBind.put(player.getName(),qqId);
-                        Utils.playerCode.put(player.getName(),Utils.getRandomString(Config.Bot_ConfirmCodeLength));
-                        String verify = Config.Bot_ConfirmBindCommand + " "+ player.getName() + " "+ Utils.playerCode.get(player.getName());
+                        Utils.playerCode.put(player.getName(),Utils.getRandomString(SpongeConfig.Bot_ConfirmCodeLength));
+                        String verify = SpongeConfig.Bot_ConfirmBindCommand + " "+ player.getName() + " "+ Utils.playerCode.get(player.getName());
                         player.sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&e请使用你的QQ私聊机器人或向机器人所在群发送以下消息："));
                         player.sendMessage(Text.of(TextColors.AQUA + verify));
                         player.sendMessage(TextSerializers.FORMATTING_CODE.deserialize("&e以完成验证流程 &7(点击可复制)"));
@@ -191,7 +192,7 @@ public class SpongePlugin implements CommandExecutor {
                 case "reload":{
                     if(sender.hasPermission("miraimc.command.link2qq.reload")){
                         try {
-                            Config.reloadConfig();
+                            SpongeConfig.reloadConfig();
                             Utils.qqCode.clear();
                             Utils.qqBind.clear();
                             Utils.playerBind.clear();

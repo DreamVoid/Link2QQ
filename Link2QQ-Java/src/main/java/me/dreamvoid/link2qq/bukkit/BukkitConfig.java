@@ -1,10 +1,9 @@
-package me.dreamvoid.link2qq.nukkit;
+package me.dreamvoid.link2qq.bukkit;
 
-import java.io.File;
 import java.util.List;
 
-public class Config {
-    private final NukkitPlugin plugin;
+public class BukkitConfig {
+    private final BukkitPlugin plugin;
 
     public static List<Long> Bot_Id;
     public static List<Long> Bot_Group;
@@ -12,14 +11,12 @@ public class Config {
     public static String Bot_ConfirmBindCommand;
     public static int Bot_ConfirmCodeLength;
 
-    public Config(NukkitPlugin plugin){
+    public BukkitConfig(BukkitPlugin plugin){
         this.plugin = plugin;
     }
 
     public void loadConfig(){
-        if(!new File(plugin.getDataFolder(),"config.yml").exists()){
-            plugin.saveDefaultConfig();
-        }
+        plugin.saveDefaultConfig();
 
         Bot_Id = plugin.getConfig().getLongList("bot.bot-accounts");
         Bot_Group = plugin.getConfig().getLongList("bot.group-ids");
