@@ -9,10 +9,8 @@
     <packaging>pom</packaging>
     <version>1.2</version>
     <modules>
-        <module>Link2QQ-Bukkit</module>
-        <module>Link2QQ-Bungee</module>
+        <module>Link2QQ-Java</module>
         <module>Link2QQ-Nukkit</module>
-        <module>Link2QQ-Sponge</module>
     </modules>
 
     <properties>
