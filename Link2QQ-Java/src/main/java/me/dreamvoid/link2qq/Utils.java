@@ -2,6 +2,8 @@ package me.dreamvoid.link2qq;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Utils {
     public static HashMap<String, Long> playerBind = new HashMap<>(); //玩家名，QQ号
@@ -11,12 +13,6 @@ public class Utils {
 
     public static String getRandomString(int length){
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        Random random=new Random();
-        StringBuilder sb=new StringBuilder();
-        for(int i=0;i<length;i++){
-            int number=random.nextInt(62);
-            sb.append(str.charAt(number));
-        }
-        return sb.toString();
+        return IntStream.range(0, length).map(i -> new Random().nextInt(62)).mapToObj(number -> String.valueOf(str.charAt(number))).collect(Collectors.joining());
     }
 }

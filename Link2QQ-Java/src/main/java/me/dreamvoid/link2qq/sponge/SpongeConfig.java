@@ -1,5 +1,6 @@
 package me.dreamvoid.link2qq.sponge;
 
+import me.dreamvoid.link2qq.Config;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -15,12 +16,6 @@ public class SpongeConfig {
 
     public static File PluginDir;
 
-    public static List<Long> Bot_Id;
-    public static List<Long> Bot_Group;
-    public static String Bot_AddBindCommand;
-    public static String Bot_ConfirmBindCommand;
-    public static int Bot_ConfirmCodeLength;
-
     public SpongeConfig(SpongePlugin plugin){
         Instance = this;
         this.plugin = plugin;
@@ -30,7 +25,7 @@ public class SpongeConfig {
         if(!PluginDir.exists() && !PluginDir.mkdirs()) throw new RuntimeException("Failed to create data folder!");
         File file = new File(plugin.getDataFolder(), "config.yml");
         if (!file.exists()) {
-            try (InputStream is = plugin.getClass().getResourceAsStream("/config.yml")) {
+            try (InputStream is = plugin.getClass().getResourceAsStream("/config-sponge.yml")) {
                 assert is != null;
                 Files.copy(is, file.toPath());
             }
@@ -38,14 +33,18 @@ public class SpongeConfig {
 
         Yaml yaml = new Yaml();
         InputStream inputStream = new FileInputStream(file);
+        //yaml.loadAs(inputStream, Config.class);
+
         Map<String, Object> obj = (Map<String, Object>) yaml.load(inputStream);
 
         Map<String, Object> bot = !Objects.isNull(obj.get("bot")) ? (Map<String, Object>) obj.get("bot") : new HashMap<>();
-        Bot_Id = !Objects.isNull(bot.get("bot-accounts:")) ? (List<Long>) bot.get("bot-accounts") : Arrays.asList(123456L, 789012L);
-        Bot_Group = !Objects.isNull(bot.get("group-ids")) ? (List<Long>) bot.get("group-ids") : Arrays.asList(123456L, 789012L);
-        Bot_AddBindCommand = !Objects.isNull(bot.get("add-bind-command")) ? (String) bot.get("add-bind-command") : "添加绑定";
-        Bot_ConfirmBindCommand = !Objects.isNull(bot.get("confirm-bind-command")) ? (String) bot.get("confirm-bind-command") : "添加绑定";
-        Bot_ConfirmCodeLength = !Objects.isNull(bot.get("confirm-code-length")) ? (Integer) bot.get("confirm-code-length") : 6;
+        Config.Bot.BotAccounts = !Objects.isNull(bot.get("bot-accounts:")) ? (List<Long>) bot.get("bot-accounts") : Arrays.asList(123456L, 789012L);
+        Config.Bot.GroupIds = !Objects.isNull(bot.get("group-ids")) ? (List<Long>) bot.get("group-ids") : Arrays.asList(123456L, 789012L);
+        Config.Bot.AddBindCommand = !Objects.isNull(bot.get("add-bind-command")) ? (String) bot.get("add-bind-command") : "添加绑定";
+        Config.Bot.ConfirmBindCommand = !Objects.isNull(bot.get("confirm-bind-command")) ? (String) bot.get("confirm-bind-command") : "添加绑定";
+        Config.Bot.ConfirmCodeLength = !Objects.isNull(bot.get("confirm-code-length")) ? (Integer) bot.get("confirm-code-length") : 6;
+
+        System.out.println(Config.Bot.ConfirmCodeLength);
     }
 
     public static void reloadConfig() throws IOException{

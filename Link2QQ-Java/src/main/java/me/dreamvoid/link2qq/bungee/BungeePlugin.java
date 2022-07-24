@@ -1,5 +1,6 @@
 package me.dreamvoid.link2qq.bungee;
 
+import me.dreamvoid.link2qq.Config;
 import me.dreamvoid.link2qq.Utils;
 import me.dreamvoid.link2qq.bungee.command.link2qq;
 import me.dreamvoid.miraimc.api.MiraiBot;
@@ -11,6 +12,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.event.EventHandler;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class BungeePlugin extends Plugin implements Listener {
@@ -23,7 +25,11 @@ public class BungeePlugin extends Plugin implements Listener {
 
     @Override
     public void onEnable() {
-        config.loadConfigBungee();
+        try {
+            config.loadConfigBungee();
+        } catch (IOException e) {
+            getLogger().warning("读取配置文件时出现异常，原因：" + e);
+        }
         ProxyServer.getInstance().getPluginManager().registerCommand(this,new link2qq(this,"link2qq"));
     }
 
@@ -34,15 +40,15 @@ public class BungeePlugin extends Plugin implements Listener {
 
     @EventHandler
     public void onFriendMessageReceive(MiraiFriendMessageEvent e){
-        if(BungeeConfig.Bot_Id.contains(e.getBotID())){
+        if(Config.Bot.BotAccounts.contains(e.getBotID())){
             getProxy().getScheduler().runAsync(this, () -> {
                 String[] args = e.getMessage().split(" ");
-                if(args[0].equals(BungeeConfig.Bot_AddBindCommand)){
+                if(args[0].equals(Config.Bot.AddBindCommand)){
                     if(args.length >= 2){
                         Utils.qqBind.remove(e.getSenderID());
                         Utils.qqCode.remove(e.getSenderID());
                         Utils.qqBind.put(e.getSenderID(),args[1]);
-                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(BungeeConfig.Bot_ConfirmCodeLength));
+                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(Config.Bot.ConfirmCodeLength));
                         for (String s : Arrays.asList("请在游戏内输入指令以完成绑定流程：", "/link2qq verify " + e.getSenderID() + " " + Utils.qqCode.get(e.getSenderID()))) {
                             MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage(s);
                             try {
@@ -53,7 +59,7 @@ public class BungeePlugin extends Plugin implements Listener {
                         }
                     } else MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("参数不足，请检查消息内容！");
                 }
-                if(args[0].equals(BungeeConfig.Bot_ConfirmBindCommand)){
+                if(args[0].equals(Config.Bot.ConfirmBindCommand)){
                     if(args.length >= 3){
                         String name = args[1];
                         String code = args[2];
@@ -69,15 +75,15 @@ public class BungeePlugin extends Plugin implements Listener {
 
     @EventHandler
     public void onGroupMessageReceive(MiraiGroupMessageEvent e){
-        if(BungeeConfig.Bot_Id.contains(e.getBotID()) && BungeeConfig.Bot_Group.contains(e.getGroupID())){
+        if(Config.Bot.BotAccounts.contains(e.getBotID()) && Config.Bot.GroupIds.contains(e.getGroupID())){
             getProxy().getScheduler().runAsync(this, () -> {
                 String[] args = e.getMessage().split(" ");
-                if(args[0].equals(BungeeConfig.Bot_AddBindCommand)){
+                if(args[0].equals(Config.Bot.AddBindCommand)){
                     if(args.length >= 2){
                         Utils.qqBind.remove(e.getSenderID());
                         Utils.qqCode.remove(e.getSenderID());
                         Utils.qqBind.put(e.getSenderID(),args[1]);
-                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(BungeeConfig.Bot_ConfirmCodeLength));
+                        Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(Config.Bot.ConfirmCodeLength));
                         for (String s : Arrays.asList("请在游戏内输入指令以完成绑定流程：", "/link2qq verify " + e.getSenderID() + " " + Utils.qqCode.get(e.getSenderID()))) {
                             MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(s);
                             try {
@@ -88,7 +94,7 @@ public class BungeePlugin extends Plugin implements Listener {
                         }
                     } else MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("参数不足，请检查消息内容！");
                 }
-                if(args[0].equals(BungeeConfig.Bot_ConfirmBindCommand)){
+                if(args[0].equals(Config.Bot.ConfirmBindCommand)){
                     if(args.length >= 3){
                         String name = args[1];
                         String code = args[2];

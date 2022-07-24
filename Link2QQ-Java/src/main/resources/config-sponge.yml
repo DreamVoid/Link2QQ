@@ -1,0 +1,10 @@
+bot:
+  bot-accounts:
+    - 123456
+    - 789012
+  group-ids:
+    - 123456
+    - 789012
+  add-bind-command: "添加绑定"
+  confirm-bind-command: "确认绑定"
+  confirm-code-length: 6
