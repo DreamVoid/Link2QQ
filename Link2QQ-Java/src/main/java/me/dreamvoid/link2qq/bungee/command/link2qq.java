@@ -1,5 +1,6 @@
 package me.dreamvoid.link2qq.bungee.command;
 
+import me.dreamvoid.link2qq.Config;
 import me.dreamvoid.link2qq.Utils;
 import me.dreamvoid.link2qq.bungee.BungeeConfig;
 import me.dreamvoid.link2qq.bungee.BungeePlugin;
@@ -12,6 +13,7 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class link2qq extends Command {
@@ -32,8 +34,8 @@ public class link2qq extends Command {
                         Utils.playerBind.remove(player.getName());
                         Utils.playerCode.remove(player.getName());
                         Utils.playerBind.put(player.getName(),qqId);
-                        Utils.playerCode.put(player.getName(),Utils.getRandomString(BungeeConfig.Bot_ConfirmCodeLength));
-                        String verify = BungeeConfig.Bot_ConfirmBindCommand + " "+ player.getName() + " "+ Utils.playerCode.get(player.getName());
+                        Utils.playerCode.put(player.getName(),Utils.getRandomString(Config.Bot.ConfirmCodeLength));
+                        String verify = Config.Bot.ConfirmBindCommand + " "+ player.getName() + " "+ Utils.playerCode.get(player.getName());
                         TextComponent message = new TextComponent(new TextComponent(ChatColor.AQUA + verify));
                         message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, verify));
                         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText("点击置入编辑框以复制")));
@@ -60,12 +62,17 @@ public class link2qq extends Command {
                 }
                 case "reload":{
                     if(sender.hasPermission("miraimc.command.link2qq.reload")){
-                        BungeeConfig.reloadConfigBungee();
-                        Utils.qqCode.clear();
-                        Utils.qqBind.clear();
-                        Utils.playerBind.clear();
-                        Utils.playerCode.clear();
-                        sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&a配置文件已重新加载，并已清空待验证队列！")));
+                        try {
+                            BungeeConfig.reloadConfigBungee();
+                            Utils.qqCode.clear();
+                            Utils.qqBind.clear();
+                            Utils.playerBind.clear();
+                            Utils.playerCode.clear();
+                            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&a配置文件已重新加载，并已清空待验证队列！")));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&c配置文件加载时出现异常，请检查控制台了解更多信息！")));
+                        }
                     } else sender.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&c你没有足够的权限执行此命令！")));
                     break;
                 }

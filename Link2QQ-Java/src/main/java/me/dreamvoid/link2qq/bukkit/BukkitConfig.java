@@ -1,15 +1,9 @@
 package me.dreamvoid.link2qq.bukkit;
 
-import java.util.List;
+import me.dreamvoid.link2qq.Config;
 
 public class BukkitConfig {
     private final BukkitPlugin plugin;
-
-    public static List<Long> Bot_Id;
-    public static List<Long> Bot_Group;
-    public static String Bot_AddBindCommand;
-    public static String Bot_ConfirmBindCommand;
-    public static int Bot_ConfirmCodeLength;
 
     public BukkitConfig(BukkitPlugin plugin){
         this.plugin = plugin;
@@ -18,10 +12,10 @@ public class BukkitConfig {
     public void loadConfig(){
         plugin.saveDefaultConfig();
 
-        Bot_Id = plugin.getConfig().getLongList("bot.bot-accounts");
-        Bot_Group = plugin.getConfig().getLongList("bot.group-ids");
-        Bot_AddBindCommand = plugin.getConfig().getString("bot.add-bind-command","添加绑定");
-        Bot_ConfirmBindCommand = plugin.getConfig().getString("bot.confirm-bind-command","确认绑定");
-        Bot_ConfirmCodeLength = plugin.getConfig().getInt("bot.confirm-code-length", 6);
+        Config.Bot.BotAccounts = plugin.getConfig().getLongList("bot.bot-accounts");
+        Config.Bot.GroupIds = plugin.getConfig().getLongList("bot.group-ids");
+        Config.Bot.AddBindCommand = plugin.getConfig().getString("bot.add-bind-command","添加绑定");
+        Config.Bot.ConfirmBindCommand = plugin.getConfig().getString("bot.confirm-bind-command","确认绑定");
+        Config.Bot.ConfirmCodeLength = plugin.getConfig().getInt("bot.confirm-code-length", 6);
     }
 }
