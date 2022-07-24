@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.List;
 
-public class Config {
+public class BungeeConfig {
     private static BungeePlugin BungeePlugin;
     private static Configuration bungeeConfig;
 
@@ -18,9 +18,9 @@ public class Config {
     public static String Bot_AddBindCommand;
     public static String Bot_ConfirmBindCommand;
     public static int Bot_ConfirmCodeLength;
-    private static Config Instance;
+    private static BungeeConfig Instance;
 
-    public Config(BungeePlugin bungee){
+    public BungeeConfig(BungeePlugin bungee){
         BungeePlugin = bungee;
         Instance = this;
     }

@@ -1,5 +1,6 @@
 package me.dreamvoid.link2qq.bukkit;
 
+import me.dreamvoid.link2qq.Utils;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiFriendMessageEvent;
@@ -21,11 +22,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Arrays;
 
 public class BukkitPlugin extends JavaPlugin implements Listener {
-    private Config PluginConfig;
+    private BukkitConfig PluginConfig;
 
     @Override
     public void onLoad() {
-        PluginConfig = new Config(this);
+        PluginConfig = new BukkitConfig(this);
     }
 
     @Override
@@ -39,17 +40,17 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onFriendMessageReceive(MiraiFriendMessageEvent e){
-        if(Config.Bot_Id.contains(e.getBotID())){
+        if(BukkitConfig.Bot_Id.contains(e.getBotID())){
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     String[] args = e.getMessage().split(" ");
-                    if(args[0].equals(Config.Bot_AddBindCommand)){
+                    if(args[0].equals(BukkitConfig.Bot_AddBindCommand)){
                         if(args.length >= 2){
                             Utils.qqBind.remove(e.getSenderID());
                             Utils.qqCode.remove(e.getSenderID());
                             Utils.qqBind.put(e.getSenderID(),args[1]);
-                            Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(Config.Bot_ConfirmCodeLength));
+                            Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(BukkitConfig.Bot_ConfirmCodeLength));
                             for (String s : Arrays.asList("请在游戏内输入指令以完成绑定流程：", "/link2qq verify " + e.getSenderID() + " " + Utils.qqCode.get(e.getSenderID()))) {
                                 MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage(s);
                                 try {
@@ -60,7 +61,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                             }
                         } else MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("参数不足，请检查消息内容！");
                     }
-                    if(args[0].equals(Config.Bot_ConfirmBindCommand)){
+                    if(args[0].equals(BukkitConfig.Bot_ConfirmBindCommand)){
                         if(args.length >= 3){
                             String name = args[1];
                             String code = args[2];
@@ -77,17 +78,17 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onGroupMessageReceive(MiraiGroupMessageEvent e){
-        if(Config.Bot_Id.contains(e.getBotID()) && Config.Bot_Group.contains(e.getGroupID())){
+        if(BukkitConfig.Bot_Id.contains(e.getBotID()) && BukkitConfig.Bot_Group.contains(e.getGroupID())){
             new BukkitRunnable() {
                 @Override
                 public void run() {
                     String[] args = e.getMessage().split(" ");
-                    if(args[0].equals(Config.Bot_AddBindCommand)){
+                    if(args[0].equals(BukkitConfig.Bot_AddBindCommand)){
                         if(args.length >= 2){
                             Utils.qqBind.remove(e.getSenderID());
                             Utils.qqCode.remove(e.getSenderID());
                             Utils.qqBind.put(e.getSenderID(),args[1]);
-                            Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(Config.Bot_ConfirmCodeLength));
+                            Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(BukkitConfig.Bot_ConfirmCodeLength));
                             for (String s : Arrays.asList("请在游戏内输入指令以完成绑定流程：", "/link2qq verify " + e.getSenderID() + " " + Utils.qqCode.get(e.getSenderID()))) {
                                 MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage(s);
                                 try {
@@ -98,7 +99,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                             }
                         } else MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("参数不足，请检查消息内容！");
                     }
-                    if(args[0].equals(Config.Bot_ConfirmBindCommand)){
+                    if(args[0].equals(BukkitConfig.Bot_ConfirmBindCommand)){
                         if(args.length >= 3){
                             String name = args[1];
                             String code = args[2];
@@ -126,8 +127,8 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                         Utils.playerBind.remove(player.getName());
                         Utils.playerCode.remove(player.getName());
                         Utils.playerBind.put(player.getName(),qqId);
-                        Utils.playerCode.put(player.getName(),Utils.getRandomString(Config.Bot_ConfirmCodeLength));
-                        String verify = Config.Bot_ConfirmBindCommand + " "+ player.getName() + " "+ Utils.playerCode.get(player.getName());
+                        Utils.playerCode.put(player.getName(),Utils.getRandomString(BukkitConfig.Bot_ConfirmCodeLength));
+                        String verify = BukkitConfig.Bot_ConfirmBindCommand + " "+ player.getName() + " "+ Utils.playerCode.get(player.getName());
                         TextComponent message = new TextComponent(ChatColor.AQUA + verify);
                         message.setClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, verify));
                         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder("点击置入编辑框以复制")).create()));

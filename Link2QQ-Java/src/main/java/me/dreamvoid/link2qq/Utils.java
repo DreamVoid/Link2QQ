@@ -1,4 +1,4 @@
-package me.dreamvoid.link2qq.bungee;
+package me.dreamvoid.link2qq;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -10,7 +10,7 @@ public class Utils {
     public static HashMap<Long, String> qqCode = new HashMap<>(); //QQ号，验证码
 
     public static String getRandomString(int length){
-        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random=new Random();
         StringBuilder sb=new StringBuilder();
         for(int i=0;i<length;i++){
