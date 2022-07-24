@@ -28,9 +28,9 @@ public class Config {
     }
     public void loadConfig() throws IOException {
         if(!PluginDir.exists() && !PluginDir.mkdirs()) throw new RuntimeException("Failed to create data folder!");
-        File file = new File(plugin.getDataFolder(), "link2qq.yml");
+        File file = new File(plugin.getDataFolder(), "config.yml");
         if (!file.exists()) {
-            try (InputStream is = plugin.getClass().getResourceAsStream("/link2qq.yml")) {
+            try (InputStream is = plugin.getClass().getResourceAsStream("/config.yml")) {
                 assert is != null;
                 Files.copy(is, file.toPath());
             }
