@@ -6,9 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Config {
-	@SerializedName("bot")
-	public static Bot Bot;
-
 	public static class Bot {
 		@SerializedName("bot-accounts")
 		public List<Long> BotAccounts = Arrays.asList(123456L, 789012L);
@@ -21,4 +18,6 @@ public class Config {
 		@SerializedName("confirm-code-length")
 		public int ConfirmCodeLength = 6;
 	}
+	@SerializedName("bot")
+	public static Bot Bot = new Bot();
 }
