@@ -9,8 +9,12 @@
     <packaging>pom</packaging>
     <version>1.2</version>
     <modules>
-        <module>Link2QQ-Java</module>
+        <module>Link2QQ-Base</module>
+        <module>Link2QQ-Bukkit</module>
+        <module>Link2QQ-Bungee</module>
+        <module>Link2QQ-Sponge</module>
         <module>Link2QQ-Nukkit</module>
+        <module>Link2QQ-Velocity</module>
     </modules>
 
     <properties>
@@ -46,15 +50,13 @@
         </testResources>
     </build>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>io.github.dreamvoid</groupId>
-                <artifactId>MiraiMC-Integration</artifactId>
-                <!--请确保版本为Github上的最新版本-->
-                <version>1.7</version>
-                <scope>provided</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>io.github.dreamvoid</groupId>
+            <artifactId>MiraiMC-Integration</artifactId>
+            <!--请确保版本为Github上的最新版本-->
+            <version>1.8.2</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
 </project>
