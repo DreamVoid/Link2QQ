@@ -2,7 +2,7 @@ package me.dreamvoid.link2qq.sponge;
 
 import com.google.gson.Gson;
 import com.google.inject.Inject;
-import me.dreamvoid.link2qq.SerializableConfig;
+import me.dreamvoid.link2qq.config.SerializableConfig;
 import me.dreamvoid.link2qq.Utils;
 import me.dreamvoid.miraimc.api.MiraiBot;
 import me.dreamvoid.miraimc.api.MiraiMC;
@@ -134,7 +134,7 @@ public class SpongePlugin implements CommandExecutor {
                         String name = args[1];
                         String code = args[2];
                         if(Utils.playerBind.get(name) != null && Utils.playerCode.get(name) != null && Utils.playerBind.get(name) == (e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
-                            MiraiMC.addBind(Sponge.getServer().getPlayer(name).get().getUniqueId(), e.getSenderID());
+                            MiraiMC.Bind.addBind(Sponge.getServer().getPlayer(name).get().getUniqueId(), e.getSenderID());
                             MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("已成功添加绑定！如需更换绑定，请直接发起新的绑定；如需取消绑定，请联系管理员！");
                             Utils.playerBind.remove(name);
                             Utils.playerCode.remove(name);
@@ -184,7 +184,7 @@ public class SpongePlugin implements CommandExecutor {
                         long qqId = Long.parseLong(args[1]);
                         String code = args[2];
                         if(Utils.qqBind.get(qqId) != null && Utils.qqCode.get(qqId) != null && Utils.qqBind.get(qqId).equalsIgnoreCase(player.getName()) && Utils.qqCode.get(qqId).equals(code)){
-                            MiraiMC.addBind(player.getUniqueId(),qqId);
+                            MiraiMC.Bind.addBind(player.getUniqueId(),qqId);
                             for (String s : Arrays.asList("&a已成功添加绑定！", "&a如需取消绑定，请联系管理员！")) {
                                 player.sendMessage(TextSerializers.FORMATTING_CODE.deserialize(s));
                             }

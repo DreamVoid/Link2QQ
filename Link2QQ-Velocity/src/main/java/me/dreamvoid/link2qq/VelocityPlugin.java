@@ -12,6 +12,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import me.dreamvoid.link2qq.config.SerializableConfig;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.velocity.event.message.passive.MiraiFriendMessageEvent;
 import me.dreamvoid.miraimc.velocity.event.message.passive.MiraiGroupMessageEvent;
@@ -62,7 +63,7 @@ public class VelocityPlugin {
                     case "bind": {
                         if(args.length >=2 && sender instanceof Player){
                             Player player = (Player)sender;
-                            if(config.general.allowOverride || MiraiMC.getBind(player.getUniqueId()) == 0) {
+                            if(config.general.allowOverride || MiraiMC.Bind.getBind(player.getUniqueId()) == 0) {
                                 long qqId = Long.parseLong(args[1]);
                                 Utils.playerBind.put(player.getUsername(), qqId);
                                 Utils.playerCode.put(player.getUsername(), Utils.getRandomString(config.bot.confirmCodeLength));
@@ -83,7 +84,7 @@ public class VelocityPlugin {
                             long qqId = Long.parseLong(args[1]);
                             String code = args[2];
                             if(Utils.qqBind.containsKey(qqId) && Utils.qqCode.containsKey(qqId) && Utils.qqBind.get(qqId).equalsIgnoreCase(player.getUsername()) && Utils.qqCode.get(qqId).equals(code)){
-                                MiraiMC.addBind(player.getUniqueId(),qqId);
+                                MiraiMC.Bind.addBind(player.getUniqueId(),qqId);
                                 player.sendMessage(MiniMessage.miniMessage().deserialize("<green>已成功添加绑定！"));
                                 Utils.qqBind.remove(qqId);
                                 Utils.qqCode.remove(qqId);
@@ -126,7 +127,7 @@ public class VelocityPlugin {
                 String[] args = e.getMessage().split(" ");
                 if(args[0].equals(config.bot.addBindCommand)){
                     if(args.length >= 2){
-                        if(config.general.allowOverride || MiraiMC.getBind(e.getSenderID()) == null){
+                        if(config.general.allowOverride || MiraiMC.Bind.getBind(e.getSenderID()) == null){
                             Utils.qqBind.put(e.getSenderID(),args[1]);
                             Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(config.bot.confirmCodeLength));
                         } else {
@@ -142,7 +143,7 @@ public class VelocityPlugin {
                         String code = args[2];
                         if(Utils.playerBind.containsKey(name) && Utils.playerCode.containsKey(name) && Utils.playerBind.get(name).equals(e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
                             try{
-                                MiraiMC.addBind(server.getPlayer(name).orElseThrow(() -> new RuntimeException("玩家不在线")).getUniqueId(), e.getSenderID());
+                                MiraiMC.Bind.addBind(server.getPlayer(name).orElseThrow(() -> new RuntimeException("玩家不在线")).getUniqueId(), e.getSenderID());
                                 e.reply("已成功链接到您的Minecraft账号！");
                                 Utils.playerBind.remove(name);
                                 Utils.playerCode.remove(name);
@@ -167,7 +168,7 @@ public class VelocityPlugin {
                 String[] args = e.getMessage().split(" ");
                 if(args[0].equals(config.bot.addBindCommand)){
                     if(args.length >= 2){
-                        if(config.general.allowOverride || MiraiMC.getBind(e.getSenderID()) == null){
+                        if(config.general.allowOverride || MiraiMC.Bind.getBind(e.getSenderID()) == null){
                             Utils.qqBind.put(e.getSenderID(), args[1]);
                             Utils.qqCode.put(e.getSenderID(), Utils.getRandomString(config.bot.confirmCodeLength));
                             e.reply("请在游戏内输入指令以完成绑定流程：" + System.lineSeparator() + String.format("/link2qq verify %d %s", e.getSenderID(), Utils.qqCode.get(e.getSenderID())));
@@ -183,7 +184,7 @@ public class VelocityPlugin {
                         String code = args[2];
                         if(Utils.playerBind.containsKey(name) && Utils.playerCode.containsKey(name) && Utils.playerBind.get(name).equals(e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
                             try{
-                                MiraiMC.addBind(server.getPlayer(name).orElseThrow(() -> new RuntimeException("玩家不在线")).getUniqueId(), e.getSenderID());
+                                MiraiMC.Bind.addBind(server.getPlayer(name).orElseThrow(() -> new RuntimeException("玩家不在线")).getUniqueId(), e.getSenderID());
                                 e.reply("已成功链接到您的Minecraft账号！");
                                 Utils.playerBind.remove(name);
                                 Utils.playerCode.remove(name);

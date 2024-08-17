@@ -1,7 +1,7 @@
 package me.dreamvoid.link2qq.bungee;
 
 import com.google.gson.Gson;
-import me.dreamvoid.link2qq.SerializableConfig;
+import me.dreamvoid.link2qq.config.SerializableConfig;
 import me.dreamvoid.link2qq.Utils;
 import me.dreamvoid.link2qq.bungee.command.link2qq;
 import me.dreamvoid.miraimc.api.MiraiBot;
@@ -57,7 +57,7 @@ public class BungeePlugin extends Plugin implements Listener {
                         String name = args[1];
                         String code = args[2];
                         if(getProxy().getPlayer(name) != null && Utils.playerBind.get(name) != null && Utils.playerCode.get(name) != null && Utils.playerBind.get(name) == (e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
-                            MiraiMC.addBind(getProxy().getPlayer(name).getUniqueId(), e.getSenderID());
+                            MiraiMC.Bind.addBind(getProxy().getPlayer(name).getUniqueId(), e.getSenderID());
                             MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("已成功添加绑定！");
                             Utils.playerBind.remove(name);
                             Utils.playerCode.remove(name);
@@ -92,7 +92,7 @@ public class BungeePlugin extends Plugin implements Listener {
                         String name = args[1];
                         String code = args[2];
                         if(getProxy().getPlayer(name) != null && Utils.playerBind.get(name) != null && Utils.playerCode.get(name) != null && Utils.playerBind.get(name) == (e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
-                            MiraiMC.addBind(getProxy().getPlayer(name).getUniqueId(), e.getSenderID());
+                            MiraiMC.Bind.addBind(getProxy().getPlayer(name).getUniqueId(), e.getSenderID());
                             MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("已成功添加绑定！");
                             Utils.playerBind.remove(name);
                             Utils.playerCode.remove(name);

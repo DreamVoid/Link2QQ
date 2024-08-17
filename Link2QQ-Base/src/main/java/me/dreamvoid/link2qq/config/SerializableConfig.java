@@ -1,4 +1,4 @@
-package me.dreamvoid.link2qq;
+package me.dreamvoid.link2qq.config;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -61,7 +61,7 @@ public class NukkitPlugin extends PluginBase implements Listener {
                             String name = args[1];
                             String code = args[2];
                             if (Utils.playerBind.get(name) != null && Utils.playerCode.get(name) != null && Utils.playerBind.get(name) == (e.getSenderID()) && Utils.playerCode.get(name).equals(code)) {
-                                MiraiMC.addBind(getServer().getOfflinePlayer(name).getUniqueId(), e.getSenderID());
+                                MiraiMC.Bind.addBind(getServer().getOfflinePlayer(name).getUniqueId(), e.getSenderID());
                                 MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("已成功添加绑定！如需更换绑定，请直接发起新的绑定；如需取消绑定，请联系管理员！");
                             } else
                                 MiraiBot.getBot(e.getBotID()).getFriend(e.getSenderID()).sendMessage("无法核对您的信息，请检查您的输入或重新发起绑定！");
@@ -100,7 +100,7 @@ public class NukkitPlugin extends PluginBase implements Listener {
                             String name = args[1];
                             String code = args[2];
                             if (Utils.playerBind.get(name) != null && Utils.playerCode.get(name) != null && Utils.playerBind.get(name) == (e.getSenderID()) && Utils.playerCode.get(name).equals(code)) {
-                                MiraiMC.addBind(getServer().getOfflinePlayer(name).getUniqueId(), e.getSenderID());
+                                MiraiMC.Bind.addBind(getServer().getOfflinePlayer(name).getUniqueId(), e.getSenderID());
                                 MiraiBot.getBot(e.getBotID()).getGroup(e.getGroupID()).sendMessage("已成功添加绑定！如需更换绑定，请直接发起新的绑定；如需取消绑定，请联系管理员！");
                                 Utils.playerBind.remove(name);
                                 Utils.playerCode.remove(name);
@@ -140,7 +140,7 @@ public class NukkitPlugin extends PluginBase implements Listener {
                         long qqId = Long.parseLong(args[1]);
                         String code = args[2];
                         if(Utils.qqBind.get(qqId) != null && Utils.qqCode.get(qqId) != null && Utils.qqBind.get(qqId).equalsIgnoreCase(player.getName()) && Utils.qqCode.get(qqId).equals(code)){
-                            MiraiMC.addBind(player.getUniqueId(),qqId);
+                            MiraiMC.Bind.addBind(player.getUniqueId(),qqId);
                             for (String s : Arrays.asList("&a已成功添加绑定！", "&a如需取消绑定，请联系管理员！")) {
                                 player.sendMessage(TextFormat.colorize('&',s));
                             }

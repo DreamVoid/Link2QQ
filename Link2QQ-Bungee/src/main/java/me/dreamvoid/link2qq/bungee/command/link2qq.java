@@ -48,7 +48,7 @@ public class link2qq extends Command {
                         long qqId = Long.parseLong(args[1]);
                         String code = args[2];
                         if(Utils.qqBind.get(qqId) != null && Utils.qqCode.get(qqId) != null && Utils.qqBind.get(qqId).equalsIgnoreCase(player.getName()) && Utils.qqCode.get(qqId).equals(code)){
-                            MiraiMC.addBind(player.getUniqueId(),qqId);
+                            MiraiMC.Bind.addBind(player.getUniqueId(),qqId);
                             player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a已成功添加绑定！")));
                             player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&', "&a如需取消绑定，请联系管理员！")));
                         } else player.sendMessage(new TextComponent(ChatColor.translateAlternateColorCodes('&',"&c无法核对您的信息，请检查您的输入或重新发起绑定！")));

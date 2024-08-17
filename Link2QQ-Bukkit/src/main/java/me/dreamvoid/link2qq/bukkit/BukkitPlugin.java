@@ -1,8 +1,8 @@
 package me.dreamvoid.link2qq.bukkit;
 
 import com.google.gson.Gson;
-import me.dreamvoid.link2qq.SerializableConfig;
 import me.dreamvoid.link2qq.Utils;
+import me.dreamvoid.link2qq.config.SerializableConfig;
 import me.dreamvoid.miraimc.api.MiraiMC;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiFriendMessageEvent;
 import me.dreamvoid.miraimc.bukkit.event.message.passive.MiraiGroupMessageEvent;
@@ -49,7 +49,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                 String[] args = e.getMessage().split(" ");
                 if(args[0].equals(config.bot.addBindCommand)){
                     if(args.length >= 2){
-                        if(config.general.allowOverride || MiraiMC.getBind(e.getSenderID()) == null){
+                        if(config.general.allowOverride || MiraiMC.Bind.getBind(e.getSenderID()) == null){
                             Utils.qqBind.put(e.getSenderID(),args[1]);
                             Utils.qqCode.put(e.getSenderID(),Utils.getRandomString(config.bot.confirmCodeLength));
                         } else {
@@ -64,7 +64,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                         String name = args[1];
                         String code = args[2];
                         if(Utils.playerBind.containsKey(name) && Utils.playerCode.containsKey(name) && Utils.playerBind.get(name).equals(e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
-                            MiraiMC.addBind(Bukkit.getOfflinePlayer(name).getUniqueId(), e.getSenderID());
+                            MiraiMC.Bind.addBind(Bukkit.getOfflinePlayer(name).getUniqueId(), e.getSenderID());
                             e.reply("已成功链接到您的Minecraft账号！");
                             Utils.playerBind.remove(name);
                             Utils.playerCode.remove(name);
@@ -86,7 +86,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                 String[] args = e.getMessage().split(" ");
                 if(args[0].equals(config.bot.addBindCommand)){
                     if(args.length >= 2){
-                        if(config.general.allowOverride || MiraiMC.getBind(e.getSenderID()) == null){
+                        if(config.general.allowOverride || MiraiMC.Bind.getBind(e.getSenderID()) == null){
                             Utils.qqBind.put(e.getSenderID(), args[1]);
                             Utils.qqCode.put(e.getSenderID(), Utils.getRandomString(config.bot.confirmCodeLength));
                             e.reply("请在游戏内输入指令以完成绑定流程：" + System.lineSeparator() + String.format("/link2qq verify %d %s", e.getSenderID(), Utils.qqCode.get(e.getSenderID())));
@@ -101,7 +101,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                         String name = args[1];
                         String code = args[2];
                         if(Utils.playerBind.containsKey(name) && Utils.playerCode.containsKey(name) && Utils.playerBind.get(name).equals(e.getSenderID()) && Utils.playerCode.get(name).equals(code)){
-                            MiraiMC.addBind(Bukkit.getOfflinePlayer(name).getUniqueId(), e.getSenderID());
+                            MiraiMC.Bind.addBind(Bukkit.getOfflinePlayer(name).getUniqueId(), e.getSenderID());
                             e.reply("已成功链接到您的Minecraft账号！");
                             Utils.playerBind.remove(name);
                             Utils.playerCode.remove(name);
@@ -123,7 +123,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                 case "bind": {
                     if(args.length >=2 && sender instanceof Player){
                         Player player = (Player)sender;
-                        if(config.general.allowOverride || MiraiMC.getBind(player.getUniqueId()) == 0) {
+                        if(config.general.allowOverride || MiraiMC.Bind.getBind(player.getUniqueId()) == 0) {
                             long qqId = Long.parseLong(args[1]);
                             Utils.playerBind.put(player.getName(), qqId);
                             Utils.playerCode.put(player.getName(), Utils.getRandomString(config.bot.confirmCodeLength));
@@ -147,7 +147,7 @@ public class BukkitPlugin extends JavaPlugin implements Listener {
                         long qqId = Long.parseLong(args[1]);
                         String code = args[2];
                         if(Utils.qqBind.containsKey(qqId) && Utils.qqCode.containsKey(qqId) && Utils.qqBind.get(qqId).equalsIgnoreCase(player.getName()) && Utils.qqCode.get(qqId).equals(code)){
-                            MiraiMC.addBind(player.getUniqueId(),qqId);
+                            MiraiMC.Bind.addBind(player.getUniqueId(),qqId);
                             for (String s : Arrays.asList("&a已成功添加绑定！", "&a如需取消绑定，请联系管理员！")) {
                                 player.sendMessage(ChatColor.translateAlternateColorCodes('&',s));
                             }
